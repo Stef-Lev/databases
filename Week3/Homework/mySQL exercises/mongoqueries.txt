@@ -1,0 +1,50 @@
+ db.city.insert({
+     id: 7777,
+     name: 'Milies',
+     countryCode: 'GRC',
+     district: 'THESSALY',
+     population: 640
+ })
+
+
+ db.city.update({id: 4080},
+ {
+     $set: {
+         population: 640
+     }
+ })
+
+
+db.city.find({name: 'MILIES'}).pretty()
+
+
+db.city.find({countryCode:'GRC'}).pretty()
+
+
+db.city.remove({id: 7777})
+
+
+<-- Exercise 05 -->
+
+1.
+db.countrylanguage.aggregate([ 
+    {$match: {percentage: { $gt:50 }}},
+    {$group: {_id:null,  average: { $avg: "$percentage" }}} 
+])
+
+
+2.
+db.city.aggregate([ 
+    {
+        $lookup: {
+            from:'country',
+            localField:'countryCode',
+            foreignField:'code',
+            as:'codeThree'
+        }
+    },
+    { $match: {'codeThree.region': 'Western Europe'} },
+    { $sort: {population: -1} },
+    { $limit: 10 },
+    { $project: {_id:0,name:1,population:1,'codeThree.region':1} }
+]).pretty()

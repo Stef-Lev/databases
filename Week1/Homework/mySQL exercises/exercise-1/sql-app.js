@@ -1,4 +1,3 @@
-
 const mysql = require('mysql');
 const con = mysql.createConnection({
     host: 'localhost',
@@ -44,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Departments (
     dept_name varchar(255),
     manager varchar(255),
     PRIMARY KEY (dept_no),
-    UNIQUE (dept)
+    UNIQUE (dept_no)
     );
 INSERT INTO Departments (dept_no,dept_name,manager) 
     VALUES 
